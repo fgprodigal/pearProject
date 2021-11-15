@@ -1,0 +1,40 @@
+version: "3.5"
+services:
+  redis:
+    image: redis
+    restart: unless-stopped
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./mysql/logs:/logs
+
+  api:
+    build: ./build/api/
+    hostname: pearProjectApi
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./api/config/.env:/var/www/html/pearProjectApi/.env
+    links:
+      - redis
+      - db
+    ports:
+      - "8888:80"
+      - "2345:2345"
+
+  web:
+    build: ./build/web
+    hostname: pearProjectWeb
+    restart: unless-stopped
+    ports:
+      - "8045:80"
