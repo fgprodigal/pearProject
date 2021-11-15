@@ -3,9 +3,7 @@ FROM php:7.1.31-apache
 #添加redis
 ENV PHPREDIS_VERSION 5.0.2
 
-RUN export http_proxy=http://192.168.169.235:18899 && \
-    export https_proxy=http://192.168.169.235:18899 && \
-    curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz && \
+RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz && \
     apt update && \
     apt autoremove -y && \
     apt install -y libzip-dev zip git && \
