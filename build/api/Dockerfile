@@ -18,6 +18,7 @@ RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$P
     apt-get clean -y && \
     mkdir /var/www/html/pearProjectApi && \
     git clone -b dev https://gitee.com/vilson/ApiForProjectManage.git /var/www/html/pearProjectApi && \
+    touch /var/www/html/pearProjectApi/data/install.lock && \
     sed -i 's/192.168.1.161/0.0.0.0/g' /var/www/html/pearProjectApi/application/common/Plugins/GateWayWorker/config.php && \
     chmod +x /var/www/html/pearProjectApi/start.sh && \
     curl -o vendor.zip https://vilson-static.oss-cn-shenzhen.aliyuncs.com/common/vendor.zip && \
